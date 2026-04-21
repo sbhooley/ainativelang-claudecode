@@ -1,0 +1,14 @@
+# AINL Graph Memory Plugin Dependencies
+# Minimal dependencies following AINL principle
+
+# MCP Server SDK
+mcp>=0.1.0
+
+# Core dependencies (standard library preferred)
+# No heavy ML/embedding libraries in v0.1
+
+# Development dependencies (optional)
+pytest>=7.0.0
+pytest-asyncio>=0.21.0
+black>=23.0.0
+mypy>=1.0.0

@@ -1,0 +1,54 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ainl-graph-memory"
+version = "0.1.0"
+description = "AINL-inspired graph memory system for Claude Code"
+readme = "README.md"
+authors = [
+    {name = "Claude Code Community"}
+]
+license = {text = "MIT OR Apache-2.0"}
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+keywords = ["ainl", "graph", "memory", "agent", "claude-code"]
+requires-python = ">=3.10"
+dependencies = [
+    "mcp>=0.1.0"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-asyncio>=0.21.0",
+    "black>=23.0.0",
+    "mypy>=1.0.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/claude-code/ainl-graph-memory"
+Documentation = "https://github.com/claude-code/ainl-graph-memory/blob/main/README.md"
+Repository = "https://github.com/claude-code/ainl-graph-memory"
+Issues = "https://github.com/claude-code/ainl-graph-memory/issues"
+
+[tool.black]
+line-length = 100
+target-version = ['py310', 'py311', 'py312']
+
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
