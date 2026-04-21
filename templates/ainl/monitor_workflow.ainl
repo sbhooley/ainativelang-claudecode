@@ -1,0 +1,35 @@
+# Monitor Workflow Template
+# Checks a service health endpoint and alerts if unhealthy
+
+# frame: health_url: string
+# frame: alert_webhook: string
+
+health_monitor @cron "*/5 * * * *":  # Every 5 minutes
+  # Check health endpoint
+  response = http.GET health_url {} 10
+
+  # Extract status
+  status = core.GET response "status"
+  healthy = core.EQ status "healthy"
+
+  # Alert if unhealthy
+  if !healthy:
+    # Send alert
+    http.POST alert_webhook {
+      text: "⚠️ Service unhealthy: ${status}",
+      severity: "high",
+      timestamp: core.NOW
+    }
+
+    out {
+      status: "alerted",
+      health: status,
+      alerted_at: core.NOW
+    }
+
+  # All good
+  out {
+    status: "ok",
+    health: status,
+    checked_at: core.NOW
+  }

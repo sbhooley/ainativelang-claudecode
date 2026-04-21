@@ -1,0 +1,20 @@
+# AINL Graph Memory Plugin - Requirements (PyPI-based)
+# Updated: 2026-04-21
+# Integration approach: Use ainativelang from PyPI
+
+# Core dependencies (existing)
+sqlite-utils>=3.30
+pydantic>=2.0.0
+
+# AINL core package with MCP extras
+# Includes: compiler, runtime, all adapters, MCP server support
+ainativelang[mcp]>=1.7.0,<2.0.0
+
+# The [mcp] extra automatically installs:
+# - mcp>=1.0.0 (FastMCP framework)
+# - pyyaml>=6.0 (config file support)
+# - httpx>=0.24.0 (HTTP adapter)
+# - All runtime dependencies
+
+# Additional plugin-specific dependencies
+# (Add as needed for plugin features)

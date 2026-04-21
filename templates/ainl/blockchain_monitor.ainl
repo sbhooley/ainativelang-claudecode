@@ -1,0 +1,45 @@
+# Blockchain Monitor Template
+# Monitors Solana wallet balance and alerts if below threshold
+
+# frame: wallet_address: string
+# frame: threshold_sol: number
+# frame: alert_webhook: string
+
+wallet_monitor @cron "0 * * * *":  # Hourly
+  # Get current balance
+  balance_response = solana.GET_BALANCE wallet_address
+  lamports = core.GET balance_response "lamports"
+
+  # Convert threshold SOL to lamports (1 SOL = 1B lamports)
+  threshold_lamports = core.MUL threshold_sol 1000000000
+
+  # Check if below threshold
+  is_low = core.LT lamports threshold_lamports
+
+  if is_low:
+    # Convert lamports to SOL for display
+    current_sol = core.DIV lamports 1000000000
+
+    # Send alert
+    http.POST alert_webhook {
+      text: "💰 Low balance alert!",
+      wallet: wallet_address,
+      current_sol: current_sol,
+      threshold_sol: threshold_sol,
+      timestamp: core.NOW
+    }
+
+    out {
+      status: "alert_sent",
+      balance_sol: current_sol,
+      threshold_sol: threshold_sol,
+      alerted_at: core.NOW
+    }
+
+  # Balance is OK
+  current_sol = core.DIV lamports 1000000000
+  out {
+    status: "ok",
+    balance_sol: current_sol,
+    checked_at: core.NOW
+  }

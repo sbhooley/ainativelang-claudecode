@@ -1,0 +1,26 @@
+# API Endpoint Template
+# Creates a REST API endpoint that fetches and processes data
+
+# frame: api_key: string
+# frame: base_url: string
+
+fetch_users @api "/api/users":
+  in: user_id
+
+  # Fetch user data from external API
+  response = http.GET "${base_url}/users/${user_id}" {
+    Authorization: "Bearer ${api_key}"
+  } 30
+
+  # Extract data
+  user = core.GET response "user"
+  name = core.GET user "name"
+  email = core.GET user "email"
+
+  # Return formatted response
+  out {
+    user_id: user_id,
+    name: name,
+    email: email,
+    fetched_at: core.NOW
+  }

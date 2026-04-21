@@ -1,0 +1,18 @@
+{
+  "project_id": "test_smoke",
+  "preferred_mode": null,
+  "auto_detected": false,
+  "stats_by_mode": {
+    "balanced": {
+      "usage_count": 2,
+      "total_original_tokens": 288,
+      "total_compressed_tokens": 154,
+      "total_tokens_saved": 134,
+      "avg_savings_ratio": 0.24814814814814815,
+      "avg_quality_score": 0.8702380952380953,
+      "last_used": 1776753294.188957
+    }
+  },
+  "created_at": 1776753265.761175,
+  "updated_at": 1776753294.188957
+}

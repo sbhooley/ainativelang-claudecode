@@ -1,13 +1,21 @@
 # AINL Graph Memory for Claude Code
 
-**Production-grade graph-native memory system inspired by the AINL unified graph execution engine.**
+**Production-grade graph-native memory system with first-class AINL language integration.**
 
-[![License](https://img.shields.io/badge/license-MIT%20OR%20Apache--2.0-blue.svg)](LICENSE)
+[![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
+[![AINL](https://img.shields.io/badge/AINL-v1.7.0+-orange.svg)](https://ainativelang.com)
 
 ## What is This?
 
-AINL Graph Memory is a **Claude Code plugin** that demonstrates the power of the **AINativeLang (AINL) unified graph execution engine vision**. It transforms your coding sessions with Claude Code into a persistent, queryable knowledge graph where **execution becomes memory**.
+AINL Graph Memory is a **Claude Code plugin** that provides:
+
+1. **Graph-native memory system** - Persistent, queryable knowledge graph for your coding sessions
+2. **First-class AINL language support** - Full integration with AI Native Lang (AINL)
+3. **Smart workflow suggestions** - Auto-detects when to use .ainl for cost savings
+4. **Pattern memory** - Stores and recalls successful AINL workflows
+
+**Powered by:** [AI Native Lang (AINL)](https://ainativelang.com) - The graph-canonical programming language designed for AI agents.
 
 ### Key Innovation
 
@@ -260,12 +268,30 @@ All core architectural concepts and compression algorithms are attributed to the
 
 ## License
 
-Dual-licensed under MIT OR Apache-2.0, matching the AINL crates.
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+Copyright 2026 AINL Graph Memory Plugin Contributors
 
 ## Learn More
 
-- **ArmaraOS Architecture**: https://github.com/sbhooley/armaraos/blob/main/ARCHITECTURE.md
-- **AINL Graph Memory Guide**: https://github.com/sbhooley/armaraos/blob/main/docs/graph-memory.md
+### AINL Resources
+- **Official Website**: https://ainativelang.com
+- **AINL on PyPI**: https://pypi.org/project/ainativelang/
+- **GitHub**: https://github.com/sbhooley/ainativelang
+- **Documentation**: https://ainativelang.com/docs
+
+### Related Projects
+- **ArmaraOS**: https://github.com/sbhooley/armaraos (Desktop agent OS built on AINL)
 - **ainl-memory crate**: https://crates.io/crates/ainl-memory
 - **ainl-runtime crate**: https://crates.io/crates/ainl-runtime
 

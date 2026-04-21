@@ -1,0 +1,44 @@
+# Data Pipeline Template
+# ETL: Extract from API, Transform, Load to warehouse
+
+# frame: source_api: string
+# frame: warehouse_url: string
+# frame: api_key: string
+
+data_pipeline @cron "0 2 * * *":  # Daily at 2 AM
+  # EXTRACT: Fetch raw data
+  raw_response = http.GET "${source_api}/export?date=today" {
+    Authorization: "Bearer ${api_key}"
+  } 60
+
+  records = core.GET raw_response "records"
+  count = core.LEN records
+
+  # TRANSFORM: Process records (example: filter valid ones)
+  # In real pipeline, you'd do more complex transformations
+
+  # LOAD: Send to warehouse
+  warehouse_response = http.POST warehouse_url {
+    date: core.ISO,
+    record_count: count,
+    records: records,
+    pipeline: "daily_export"
+  } 120
+
+  # Check load success
+  load_status = core.GET warehouse_response "status"
+  success = core.EQ load_status "success"
+
+  if success:
+    out {
+      status: "completed",
+      records_processed: count,
+      completed_at: core.NOW
+    }
+
+  # Load failed
+  out {
+    status: "failed",
+    error: load_status,
+    failed_at: core.NOW
+  }

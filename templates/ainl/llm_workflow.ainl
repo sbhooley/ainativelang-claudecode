@@ -1,0 +1,40 @@
+# LLM Workflow Template
+# AI-powered content moderation workflow
+
+# frame: content: string
+# frame: webhook_url: string
+
+content_moderator:
+  in: content
+
+  # Use LLM to classify content
+  # Note: Requires AINL_CONFIG with LLM provider setup
+  classification = llm.completion "Analyze this content for safety. Reply SAFE or UNSAFE: ${content}"
+
+  # Trim whitespace
+  classification = core.TRIM classification
+  is_safe = core.EQ classification "SAFE"
+
+  if is_safe:
+    # Content is safe, approve
+    out {
+      approved: true,
+      classification: classification,
+      content: content,
+      processed_at: core.NOW
+    }
+
+  # Content flagged, send for review
+  http.POST webhook_url {
+    action: "flag_for_review",
+    content: content,
+    classification: classification,
+    flagged_at: core.NOW
+  }
+
+  out {
+    approved: false,
+    classification: classification,
+    flagged: true,
+    processed_at: core.NOW
+  }

@@ -1,0 +1,51 @@
+# Multi-Step Automation Template
+# Approval workflow with conditional logic
+
+# frame: request_id: string
+# frame: api_base_url: string
+# frame: approval_webhook: string
+
+approval_workflow:
+  in: request_id
+
+  # Step 1: Fetch request details
+  request_response = http.GET "${api_base_url}/requests/${request_id}"
+  request = core.GET request_response "request"
+
+  amount = core.GET request "amount"
+  requester = core.GET request "requester"
+
+  # Step 2: Check auto-approval threshold
+  threshold = 10000
+  needs_approval = core.GT amount threshold
+
+  if needs_approval:
+    # High value - require manual approval
+    http.POST approval_webhook {
+      action: "request_approval",
+      request_id: request_id,
+      amount: amount,
+      requester: requester,
+      reason: "amount_exceeds_threshold"
+    }
+
+    out {
+      status: "pending_approval",
+      amount: amount,
+      threshold: threshold,
+      sent_at: core.NOW
+    }
+
+  # Step 3: Auto-approve low amounts
+  approval_response = http.POST "${api_base_url}/approve" {
+    request_id: request_id,
+    approved_by: "auto_approver",
+    auto_approved: true,
+    approved_at: core.NOW
+  }
+
+  out {
+    status: "auto_approved",
+    amount: amount,
+    approved_at: core.NOW
+  }
